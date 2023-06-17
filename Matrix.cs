@@ -11,7 +11,7 @@ namespace arrays
         public int Rows { get; }
         public int Columns { get; }
 
-        private readonly int[,] array;
+        private int[,] array;
 
         /// <summary>
         /// Entering the size of the matrix
@@ -112,8 +112,9 @@ namespace arrays
         {
             switch (SortType)
             {
-                case 0:
+                case 1:
                 {
+                    //bubble
                         for (int i = 0; i < Rows; i++)
                         {
                             var temp = 0;
@@ -132,8 +133,9 @@ namespace arrays
                         }
                         break;
                 }
-                case 1:
+                case 2:
                 {
+                    //bubble
                         for (int i = 0; i < Rows; i++)
                         {
                             var temp = 0;
@@ -152,19 +154,97 @@ namespace arrays
                         }
                         break;
                 }
+                case 3:
+                {
+                    //from small to big counting sort
+                    for (int x = 0; x < Rows; x++)
+                    {
+                        int min = 0;
+                        int max = 0;
+                        for (int i = 0; i < Columns; i++)
+                        {
+                            if (array[x,i] < min)
+                                min = array[x,i];
+                            if (array[x,i] > max)
+                                max = array[x,i];
+                        }
+
+                        int[] count = new int[max - min + 1];
+                        int z = 0;
+
+                        for (int i = 0; i < count.Length; i++)
+                            count[i] = 0;
+
+                        for (int i = 0; i < Columns; i++)
+                            count[array[x,i] - min]++;
+
+                        for (int i = min; i <= max; i++)
+                        {
+                            while (count[i - min]-- > 0)
+                            {
+                                array[x,z] = i;
+                                ++z;
+                            }
+                        }
+                    }
+                    break;
+                }
+                case 4:
+                {
+                    //from big to small counting sort
+                    for (int x = 0; x < Rows; x++)
+                    {
+                        int min = 0;
+                        int max = 0;
+                        for (int i = Columns - 1; i >= 0; i--)
+                        {
+                            if (array[x, i] < min)
+                                min = array[x, i];
+                            if (array[x, i] > max)
+                                max = array[x, i];
+                        }
+
+                        int[] count = new int[max - min + 1];
+                        int z = 0;
+
+                        for (int i = count.Length - 1; i >= 0; i--)
+                            count[i] = 0;
+
+                        for (int i = Columns - 1; i >= 0; i--)
+                            count[array[x, i] - min]++;
+
+                        for (int i = max; i >= min; i--)
+                        {
+                            while (count[i-min]-- > 0)
+                            {
+                                array[x, z] = i;
+                                ++z;
+                            }
+                        }
+                    }
+                    break;
+                }
             }
         }
 
-        public void GetTypesOfSort()
+        public void InverseLineByLine()
         {
-            
+            var outputMatrix = new int[array.GetLength(0), array.GetLength(1)];
+            var z = 0;
+            for (int i = array.GetLength(0) - 1; i >= 0; i--)
+            {
+                var y = 0;
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    outputMatrix[z, y] = array[i, j];
+                    y++;
+                }
+                z++;
+            }
+            array = outputMatrix;
         }
 
-        public enum TypesOfSort
-        {
-            LineByLineFromLargeToSmall,
-            LineByLineFromSmallToLarge
-        }
+
     }
 
     
