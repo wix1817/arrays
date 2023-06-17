@@ -2,6 +2,7 @@
 {
     internal class Program
     {
+<<<<<<< HEAD
         /*
          * Создать программу работы с матрицами (двухмерными массивами) c возможностью выбора размера матрицы
          * Элементы вводятся вручную
@@ -16,6 +17,11 @@
         static void Main(string[] args)
         {
             ApplicationMenu.Start();
+=======
+        static void Main(string[] args)
+        {
+            MatrixMenu.Start();
+>>>>>>> fe95649664e5928d518895ba632c08eb4e48e613
         }
     }
 }
